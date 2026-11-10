@@ -19,18 +19,8 @@ const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp
 const whatsapp = message => 'https://wa.me/' + phone + (message ? '?text=' + encodeURIComponent(message) : '');
 const css = `
 :root{color-scheme:light;--ink:#35272c;--wine:#652f47;--cream:#faf6ef;--line:#dfd3c6;--gold:#d5a961}*{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,sans-serif}a{color:inherit}h1,h2,h3,p{margin:0 0 1rem}h1,h2,h3,.brand{font-family:Georgia,serif;font-weight:normal;line-height:1.12}h1{font-size:clamp(3rem,8vw,6.2rem);letter-spacing:-.045em}h2{font-size:clamp(2.1rem,5vw,3.5rem);letter-spacing:-.025em}h3{font-size:1.65rem}.wrap{max-width:1170px;margin:auto;padding-inline:clamp(20px,5vw,64px)}header{border-bottom:1px solid var(--line)}nav{display:flex;align-items:center;justify-content:space-between;min-height:78px;gap:16px;flex-wrap:wrap;padding-block:12px}nav a{text-decoration:none}.brand{font-size:1.45rem}.navlinks,.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.navlinks{gap:18px;font-size:.91rem}.button,button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--wine);padding:10px 17px;min-height:44px;border-radius:5px;font:inherit;font-weight:650;cursor:pointer;background:transparent;color:var(--wine)}.primary{background:var(--wine);color:white}.hero{background:#562940;color:#fff5e7;overflow:hidden}.hero .wrap{display:grid;grid-template-columns:1.35fr 1fr;align-items:center;gap:24px;min-height:465px;padding-block:64px}.hero p{max-width:450px;color:#f2dce4}.hero .primary{background:#f4dfbd;color:#432035;border-color:#f4dfbd}.hero .button:not(.primary){color:white;border-color:#c698ad}.hero-motion{margin:0;position:relative;width:100%;max-width:530px}
-.hero-scene{position:relative;overflow:hidden;isolation:isolate;aspect-ratio:4/3;border:1px solid #b48667;border-radius:100px 100px 10px 10px;box-shadow:0 16px 36px #28132250}
-.hero-scene img{display:block;width:100%;height:100%;object-fit:cover;transform-origin:60% 57%}
-.hero-stitch{position:absolute;left:59%;top:57%;width:38%;height:2px;transform-origin:left;transform:rotate(40deg);background:repeating-linear-gradient(90deg,#ffdc91 0 6px,transparent 6px 11px);filter:drop-shadow(0 0 4px #ffd27b);opacity:0}
-.hero-replay{position:absolute;bottom:12px;left:12px;min-height:44px;border-color:#d6b89d;background:#321a29;color:#fff5e7;font-size:.84rem;padding:6px 12px}
-@keyframes tailoring-camera{from{transform:scale(1)}to{transform:scale(1.09)}}
-@keyframes tailoring-stitches{0%{clip-path:inset(0 100% 0 0);opacity:0}12%{opacity:1}82%{clip-path:inset(0 0 0 0);opacity:1}100%{clip-path:inset(0 0 0 0);opacity:0}}
-@media(prefers-reduced-motion:no-preference){
-  .hero-motion.is-animating img{animation:tailoring-camera 4.7s ease-out both}
-  .hero-motion.is-animating .hero-stitch{animation:tailoring-stitches 4.5s steps(13,end) .2s both}
-}
-@media(prefers-reduced-motion:reduce){.hero-replay{display:none}}.kicker{text-transform:uppercase;letter-spacing:.17em;font-size:.73rem;font-weight:750}.hero .kicker{color:#f0c881}.section{padding-block:62px}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,sans-serif}a{color:inherit}h1,h2,h3,p{margin:0 0 1rem}h1,h2,h3,.brand{font-family:Georgia,serif;font-weight:normal;line-height:1.12}h1{font-size:clamp(3rem,8vw,6.2rem);letter-spacing:-.045em}h2{font-size:clamp(2.1rem,5vw,3.5rem);letter-spacing:-.025em}h3{font-size:1.65rem}.wrap{max-width:1170px;margin:auto;padding-inline:clamp(20px,5vw,64px)}header{border-bottom:1px solid var(--line)}nav{display:flex;align-items:center;justify-content:space-between;min-height:78px;gap:16px;flex-wrap:wrap;padding-block:12px}nav a{text-decoration:none}.brand{font-size:1.45rem}.navlinks,.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.navlinks{gap:18px;font-size:.91rem}.button,button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--wine);padding:10px 17px;min-height:44px;border-radius:5px;font:inherit;font-weight:650;cursor:pointer;background:transparent;color:var(--wine)}.primary{background:var(--wine);color:white}.hero{background:#562940;color:#fff5e7;overflow:hidden}.hero .wrap{display:grid;grid-template-columns:1.35fr 1fr;align-items:center;gap:24px;min-height:465px;padding-block:64px}.hero p{max-width:450px;color:#f2dce4}.hero .primary{background:#f4dfbd;color:#432035;border-color:#f4dfbd}.hero .button:not(.primary){color:white;border-color:#c698ad}.hero-image{display:block;width:100%;height:auto;max-width:530px;aspect-ratio:4/3;object-fit:cover;border:1px solid #b48667;border-radius:100px 100px 10px 10px;box-shadow:0 16px 36px #28132250}
+.kicker{text-transform:uppercase;letter-spacing:.17em;font-size:.73rem;font-weight:750}.hero .kicker{color:#f0c881}.section{padding-block:62px}
 .shop-nav{position:relative}.shop-nav summary{cursor:pointer;padding:10px 0;color:var(--wine);font-weight:650}
 .shop-menu{position:absolute;top:100%;left:0;z-index:2;min-width:max-content;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fffdf9;box-shadow:0 6px 20px #35272c20}
 .shop-menu a{display:block;padding:9px 12px;border-radius:4px}.shop-menu a:hover,.shop-menu a:focus-visible{background:#f0e7da}
@@ -47,18 +37,12 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 .cards .card{scroll-snap-align:start}.services-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:20px}
 .scroll-controls{display:flex;gap:8px}.scroll-controls button:disabled{opacity:.38;cursor:default}
 .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.gallery-photo{margin:0;max-width:360px;overflow:hidden;padding:0}.gallery-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#f0e7da}.gallery-photo figcaption{padding:14px 18px}.gallery-photo h3{margin-bottom:4px}.gallery-group{margin-top:30px}.gallery-sort{margin:20px 0}.gallery-sort a[aria-current]{background:var(--wine);color:white}.card,.panel{border:1px solid var(--line);background:#fffdf9;border-radius:8px;padding:24px}.card{display:flex;flex-direction:column}.number{font-family:Georgia,serif;color:var(--wine);border-bottom:1px solid var(--line);padding-bottom:9px}.muted{color:#63545a}.visit{grid-template-columns:1fr 1fr}.visit-bg{background:#f0e7da}footer{padding-block:24px;border-top:1px solid var(--line);font-size:.9rem}.form-shell{max-width:760px}form{display:grid;gap:17px}label{font-weight:650;display:grid;gap:5px}input,select,textarea{width:100%;font:inherit;color:inherit;background:white;border:1px solid #a99a9f;border-radius:4px;padding:10px}textarea{resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:.88rem;font-weight:normal;color:#63545a}.upload{border:1px dashed #b7a3a9;padding:12px;border-radius:5px}.error{color:#8c253c}.entry{margin-top:14px;overflow-wrap:anywhere}pre{white-space:pre-wrap;font:inherit}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27127;outline-offset:3px}
-@media(max-width:760px){.hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:45px}.hero-motion{max-width:420px}.hero-scene{border-radius:64px 64px 8px 8px}.cards{grid-auto-columns:min(88%,420px)}.section{padding-block:38px}}@media(max-width:540px){.two,.visit{grid-template-columns:1fr}.navlinks{gap:13px}}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:45px}.hero-image{max-width:420px;border-radius:64px 64px 8px 8px}.cards{grid-auto-columns:min(88%,420px)}.section{padding-block:38px}}@media(max-width:540px){.two,.visit{grid-template-columns:1fr}.navlinks{gap:13px}}
 `;
 function page(title, content) {
   return '<!doctype html><html lang="en-IN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Boutique tailoring, blouse stitching, saree finishing and alterations in Miyapur, Hyderabad."><title>' + escape(title) + ' | Nrusimha Designers</title><style>' + css + '</style><header><nav class="wrap" aria-label="Main"><a href="/" class="brand">Nrusimha Designers</a><div class="navlinks"><details class="shop-nav"><summary>Shop</summary><div class="shop-menu"><a href="/shop/occasion">Shop by Occasion</a><a href="/shop/person">Shop by Person</a></div></details><a href="/#services">Services</a><a href="/gallery">Gallery</a><a href="/appointment">Appointment</a><a href="' + whatsapp() + '">WhatsApp</a></div></nav></header><main>' + content + '</main><footer><div class="wrap">Nrusimha Designers · Miyapur, Hyderabad <span aria-hidden="true"> · </span><a href="' + maps + '">Google Maps</a></div></footer></html>';
 }
-const heroAnimation = `<figure class="hero-motion">
-  <div class="hero-scene">
-    <img src="/gallery/sample/tailoring-hero.webp" alt="Sewing machine poised over gold embroidery on plum silk" width="900" height="675" fetchpriority="high">
-    <span class="hero-stitch" aria-hidden="true"></span>
-  </div>
-  <button type="button" class="hero-replay" aria-label="Replay tailoring animation" hidden>↻ Replay</button>
-</figure>`;
+
 function serviceCard(service) {
   return `<article class="card"><p class="number">${service.mark}</p><h3>${service.name}</h3><p>${service.detail}</p></article>`;
 }
@@ -74,24 +58,11 @@ function featuredGallery() {
 }
 function home() {
   return page('Boutique tailoring in Miyapur', `
-<section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/appointment">Request an Appointment</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div>${heroAnimation}</div></section>
+<section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/appointment">Request an Appointment</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div><img class="hero-image" src="/gallery/sample/tailoring-hero.webp" alt="Sewing machine poised over gold embroidery on plum silk" width="900" height="675" fetchpriority="high"></div></section>
 ${featuredGallery()}
 <section id="services" class="wrap section"><h2 id="services-heading">Services</h2><p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p><div class="cards" id="service-cards" role="region" aria-labelledby="services-heading" tabindex="0">${services.map(serviceCard).join('')}</div><div class="services-actions"><a class="button primary" href="/quote">Request a Quote</a><div class="scroll-controls" hidden><button type="button" data-slide="-1" aria-label="Scroll services left" aria-controls="service-cards">←</button><button type="button" data-slide="1" aria-label="Scroll services right" aria-controls="service-cards">→</button></div></div></section>
 <section class="visit-bg"><div class="wrap section visit"><article class="panel"><p class="kicker">Customer reviews</p><h3>See what customers say</h3><p>Browse the latest customer reviews on Google Maps.</p><a class="button" href="${maps}">Read Google Reviews</a></article><article class="panel"><p class="kicker">Visit us</p><h3>Find us in Miyapur</h3><p>HMT Swarnapuri Colony, Ameenpur, Miyapur, Hyderabad, Telangana 502033</p><p>Monday–Saturday, 10 AM–8 PM. Sunday closed.</p><a class="button" href="${directions}">Get Directions</a></article></div></section>
 <script>
-const heroMotion = document.querySelector('.hero-motion');
-const heroObserver = new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting) return;
-  heroMotion.classList.add('is-animating');
-  heroObserver.disconnect();
-}, {threshold:0.25});
-heroObserver.observe(heroMotion);
-const heroReplay = document.querySelector('.hero-replay');
-heroReplay.hidden = false;
-heroReplay.addEventListener('click', () => {
-  heroMotion.classList.remove('is-animating');
-  requestAnimationFrame(() => requestAnimationFrame(() => heroMotion.classList.add('is-animating')));
-});
 const photoWindow = document.querySelector('#featured-photos');
 const photoToggle = document.querySelector('.featured-toggle');
 if (photoToggle) {
