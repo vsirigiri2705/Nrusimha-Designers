@@ -1,3 +1,4 @@
+import { sampleGalleryImages } from './sample-gallery.js';
 const phone = '917799862333';
 const maps = 'https://www.google.com/maps?cid=1832636968131500128';
 const directions = 'https://www.google.com/maps/dir/?api=1&destination=17.5168464%2C78.342662';
@@ -6,8 +7,14 @@ const services = [
   {name:'Saree Fall & Pico', mark:'02', occasions:'wedding festive everyday', people:'women', detail:'Get your saree ready to drape with fall stitching and a neat pico edge finish.'},
   {name:'Alterations & Hemming', mark:'03', occasions:'wedding festive everyday', people:'women kids', detail:'Ask about shortening a hem, adjusting sleeves or refining the fit of a garment you already own.'}
 ];
-// Add approved photos as { name, design, src, alt }.
+// Add approved photos as { name, design, src, alt, featured }. Real photos replace the samples.
 const galleryPhotos = [];
+const samplePhotos = [
+  {name:'Plum Silk Blouse', design:'Blouse', src:'/gallery/sample/plum-blouse.webp', alt:'Plum silk blouse with gold embroidery'},
+  {name:'Teal Saree Border', design:'Saree', src:'/gallery/sample/teal-saree.webp', alt:'Folded teal silk saree with a woven gold border'},
+  {name:'Kurta Cuff & Hem', design:'Finishing', src:'/gallery/sample/kurta-finishing.webp', alt:'Close-up of a terracotta kurta cuff and stitched hem'}
+];
+const displayPhotos = galleryPhotos.length ? galleryPhotos : samplePhotos;
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const whatsapp = message => 'https://wa.me/' + phone + (message ? '?text=' + encodeURIComponent(message) : '');
 const css = `
@@ -19,6 +26,13 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 .shop-filters{border-bottom:1px solid var(--line);padding-bottom:20px;margin:22px 0 26px}.shop-filters a[aria-current]{background:var(--wine);color:white}.shop-order{margin-top:12px;display:inline-block}
 .shop-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}.visit,.gallery-grid{display:grid;gap:16px}
 .cards{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px) / 3);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
+
+.featured-section{padding-top:46px;padding-bottom:8px}.featured-head{display:flex;align-items:end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}.featured-head h2,.featured-head p:last-child{margin-bottom:0}
+.featured-actions{justify-content:flex-end}.featured-window{overflow-x:auto;border-radius:8px}.featured-track,.featured-group{display:flex;width:max-content}.featured-group{gap:14px;padding-right:14px}
+.featured-tile{margin:0;width:clamp(260px,33vw,370px);overflow:hidden;border-radius:8px;background:#fffdf9;border:1px solid var(--line)}.featured-tile img{display:block;width:100%;aspect-ratio:5/3;object-fit:cover}.featured-tile figcaption{padding:9px 14px;font-size:.92rem}
+.featured-repeat,.featured-toggle{display:none}
+@keyframes featured-scroll{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:no-preference){.featured-window.is-playing{overflow:hidden}.is-playing .featured-repeat{display:flex}.is-playing .featured-track{animation:featured-scroll 38s linear infinite}.is-playing:hover .featured-track,.is-paused .featured-track{animation-play-state:paused}.featured-toggle.is-ready{display:inline-flex}}
 .cards .card{scroll-snap-align:start}.services-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:20px}
 .scroll-controls{display:flex;gap:8px}.scroll-controls button:disabled{opacity:.38;cursor:default}
 .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.gallery-photo{margin:0;max-width:360px;overflow:hidden;padding:0}.gallery-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#f0e7da}.gallery-photo figcaption{padding:14px 18px}.gallery-photo h3{margin-bottom:4px}.gallery-group{margin-top:30px}.gallery-sort{margin:20px 0}.gallery-sort a[aria-current]{background:var(--wine);color:white}.card,.panel{border:1px solid var(--line);background:#fffdf9;border-radius:8px;padding:24px}.card{display:flex;flex-direction:column}.number{font-family:Georgia,serif;color:var(--wine);border-bottom:1px solid var(--line);padding-bottom:9px}.muted{color:#63545a}.visit{grid-template-columns:1fr 1fr}.visit-bg{background:#f0e7da}footer{padding-block:24px;border-top:1px solid var(--line);font-size:.9rem}.form-shell{max-width:760px}form{display:grid;gap:17px}label{font-weight:650;display:grid;gap:5px}input,select,textarea{width:100%;font:inherit;color:inherit;background:white;border:1px solid #a99a9f;border-radius:4px;padding:10px}textarea{resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:.88rem;font-weight:normal;color:#63545a}.upload{border:1px dashed #b7a3a9;padding:12px;border-radius:5px}.error{color:#8c253c}.entry{margin-top:14px;overflow-wrap:anywhere}pre{white-space:pre-wrap;font:inherit}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27127;outline-offset:3px}
@@ -31,12 +45,46 @@ const art = `<svg class="art" aria-hidden="true" viewBox="0 0 360 350" xmlns="ht
 function serviceCard(service) {
   return `<article class="card"><p class="number">${service.mark}</p><h3>${service.name}</h3><p>${service.detail}</p></article>`;
 }
+function featuredGallery() {
+  const selected = galleryPhotos.length ? galleryPhotos.filter(photo => photo.featured) : samplePhotos;
+  const photos = (selected.length ? selected : displayPhotos).slice(0,6);
+  const tiles = photos.map(photo => `<figure class="featured-tile"><img src="${escape(photo.src)}" alt="${escape(photo.alt || photo.name)}" decoding="async" loading="lazy"><figcaption>${escape(photo.name)}</figcaption></figure>`).join('');
+  const loop = photos.length >= 3;
+  return `<section class="wrap featured-section" aria-labelledby="featured-heading">
+<div class="featured-head"><div><p class="kicker">From the gallery</p><h2 id="featured-heading">Featured Designs</h2>${galleryPhotos.length ? '' : '<p class="muted">Illustrative samples</p>'}</div><div class="actions featured-actions">${loop ? '<button type="button" class="featured-toggle" aria-controls="featured-photos">Pause scrolling</button>' : ''}<a class="button" href="/gallery">View Gallery</a></div></div>
+<div class="featured-window" id="featured-photos" role="region" aria-label="Featured design photos" tabindex="0"><div class="featured-track"><div class="featured-group">${tiles}</div>${loop ? `<div class="featured-group featured-repeat" aria-hidden="true">${tiles}</div>` : ''}</div></div>
+</section>`;
+}
 function home() {
   return page('Boutique tailoring in Miyapur', `
 <section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/appointment">Request an Appointment</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div>${art}</div></section>
+${featuredGallery()}
 <section id="services" class="wrap section"><h2 id="services-heading">Services</h2><p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p><div class="cards" id="service-cards" role="region" aria-labelledby="services-heading" tabindex="0">${services.map(serviceCard).join('')}</div><div class="services-actions"><a class="button primary" href="/quote">Request a Quote</a><div class="scroll-controls" hidden><button type="button" data-slide="-1" aria-label="Scroll services left" aria-controls="service-cards">←</button><button type="button" data-slide="1" aria-label="Scroll services right" aria-controls="service-cards">→</button></div></div></section>
 <section class="visit-bg"><div class="wrap section visit"><article class="panel"><p class="kicker">Customer reviews</p><h3>See what customers say</h3><p>Browse the latest customer reviews on Google Maps.</p><a class="button" href="${maps}">Read Google Reviews</a></article><article class="panel"><p class="kicker">Visit us</p><h3>Find us in Miyapur</h3><p>HMT Swarnapuri Colony, Ameenpur, Miyapur, Hyderabad, Telangana 502033</p><p>Monday–Saturday, 10 AM–8 PM. Sunday closed.</p><a class="button" href="${directions}">Get Directions</a></article></div></section>
 <script>
+const photoWindow = document.querySelector('#featured-photos');
+const photoToggle = document.querySelector('.featured-toggle');
+if (photoToggle) {
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  function updatePhotoMotion() {
+    const playing = !paused && !motion.matches;
+    photoWindow.classList.toggle('is-playing', !motion.matches);
+    photoWindow.classList.toggle('is-paused', paused);
+    photoToggle.textContent = playing ? 'Pause scrolling' : 'Resume scrolling';
+  }
+  photoToggle.addEventListener('click', () => {
+    paused = !paused;
+    updatePhotoMotion();
+  });
+  photoWindow.addEventListener('focus', () => {
+    paused = true;
+    updatePhotoMotion();
+  });
+  motion.addEventListener('change', updatePhotoMotion);
+  photoToggle.classList.add('is-ready');
+  updatePhotoMotion();
+}
 const track = document.querySelector('#service-cards');
 const controls = document.querySelector('.scroll-controls');
 const [previous, next] = controls.querySelectorAll('button');
@@ -110,7 +158,7 @@ function shop(kind, params) {
 function gallery(sort) {
   const byName = sort === 'name';
   const compare = (a,b) => a.localeCompare(b,'en-IN',{sensitivity:'base',numeric:true});
-  const photos = [...galleryPhotos].sort((a,b) => byName
+  const photos = [...displayPhotos].sort((a,b) => byName
     ? compare(a.name,b.name) || compare(a.design,b.design)
     : compare(a.design,b.design) || compare(a.name,b.name));
   const photoCard = photo => `<figure class="card gallery-photo"><img src="${escape(photo.src)}" alt="${escape(photo.alt || photo.name)}" loading="lazy"><figcaption><h3>${escape(photo.name)}</h3><span class="muted">${escape(photo.design)}</span></figcaption></figure>`;
@@ -121,7 +169,7 @@ function gallery(sort) {
     groups.get(group).push(photo);
   }
   const listing = [...groups].map(([design,items]) => `<section class="gallery-group">${design ? `<h2>${escape(design)}</h2>` : ''}<div class="gallery-grid">${items.map(photoCard).join('')}</div></section>`).join('');
-  return page('Gallery', `<section class="wrap section"><p class="kicker">Nrusimha Designers</p><h1>Design Gallery</h1><p class="muted">Browse designs and finished work from our boutique.</p><div class="actions gallery-sort" role="group" aria-label="Sort gallery"><a class="button" href="/gallery"${byName ? '' : ' aria-current="page"'}>By design</a><a class="button" href="/gallery?sort=name"${byName ? ' aria-current="page"' : ''}>By name A–Z</a></div>${listing || '<div class="panel"><h3>Photos coming soon</h3><p>Explore our tailoring services while we prepare the gallery.</p><a href="/#services">View Services</a></div>'}</section>`);
+  return page('Gallery', `<section class="wrap section"><p class="kicker">Nrusimha Designers</p><h1>Design Gallery</h1><p class="muted">${galleryPhotos.length ? 'Browse designs and finished work from our boutique.' : 'These illustrative samples show the kinds of garment details you can browse here.'}</p><div class="actions gallery-sort" role="group" aria-label="Sort gallery"><a class="button" href="/gallery"${byName ? '' : ' aria-current="page"'}>By design</a><a class="button" href="/gallery?sort=name"${byName ? ' aria-current="page"' : ''}>By name A–Z</a></div>${listing || '<div class="panel"><h3>Photos coming soon</h3><p>Explore our tailoring services while we prepare the gallery.</p><a href="/#services">View Services</a></div>'}</section>`);
 }
 const reasons = ['Design consultation','Measurements','Fitting','Other'];
 const fileTypes = ['image/jpeg','image/png','image/webp'];
@@ -274,6 +322,11 @@ export default {
     if (request.method !== 'GET') return new Response('Method not allowed',{status:405});
     if (path === '/') return html(home());
     if (path === '/shop/occasion' || path === '/shop/person') return html(shop(path.slice('/shop/'.length),url.searchParams));
+    const sample = path.match(/^\/gallery\/sample\/([a-z-]+)\.webp$/);
+    if (sample && Object.hasOwn(sampleGalleryImages,sample[1])) {
+      const bytes = Uint8Array.from(atob(sampleGalleryImages[sample[1]]), char => char.charCodeAt(0));
+      return new Response(bytes,{headers:{'Content-Type':'image/webp','Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff'}});
+    }
     if (path === '/gallery') return html(gallery(url.searchParams.get('sort')));
     if (path === '/quote' || path === '/appointment') return html(form(path.slice(1),url.searchParams.get('service')));
     if (path === '/received') {

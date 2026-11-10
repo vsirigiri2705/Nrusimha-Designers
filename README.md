@@ -18,3 +18,5 @@ Service names and the shop's WhatsApp number are at the top of `worker/index.js`
 ## Gallery
 
 Add approved garment photos to the `galleryPhotos` array in `worker/index.js`. Each entry takes a display `name`, a `design` category, a photo `src` (an HTTPS URL or embedded image), and descriptive `alt` text. The gallery groups photos by design or lists them alphabetically by name.
+
+The homepage strip uses up to six photos marked `featured: true`. If none are marked, it uses the first six. The three AI-generated sample photos are used only while the gallery array is empty. The image prompt was a three-panel, model-free catalogue contact sheet of a plum embroidered blouse, a folded teal saree with a gold border, and a terracotta kurta cuff and hem, in natural light without text or branding.
