@@ -26,7 +26,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 .shop-menu a{display:block;padding:9px 12px;border-radius:4px}.shop-menu a:hover,.shop-menu a:focus-visible{background:#f0e7da}
 .shop-filters{border-bottom:1px solid var(--line);padding-bottom:20px;margin:22px 0 26px}.shop-filters a[aria-current]{background:var(--wine);color:white}.shop-order{margin-top:12px;display:inline-block}
 .shop-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}.visit,.gallery-grid{display:grid;gap:16px}
-.cards{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
+.cards{display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
 
 .featured-section{padding-top:46px;padding-bottom:8px}.featured-head{margin-bottom:16px}.featured-head h2,.featured-head p:last-child{margin-bottom:0}
 .featured-window{overflow-x:auto;border-radius:8px}.featured-track,.featured-group{display:flex;width:max-content}.featured-group{gap:14px;padding-right:14px}
@@ -65,72 +65,38 @@ ${featuredGallery()}
 <script>
 const servicesSection = document.querySelector('#services');
 const track = document.querySelector('#service-cards');
-const controls = document.querySelector('.scroll-controls');
-const cards = [...track.children];
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-
-if (cards.length > 1) {
-  function duplicate(card) {
-    const copy = card.cloneNode(true);
-    copy.setAttribute('aria-hidden', 'true');
-    return copy;
-  }
-
-  const leading = cards.map(duplicate);
-  const trailing = cards.map(duplicate);
-  track.prepend(...leading);
-  // Keep enough cards after the wrap point for a full viewport.
-  track.append(...trailing, duplicate(cards[0]));
-  const offset = card => card.offsetLeft - leading[0].offsetLeft;
-  const start = () => offset(cards[0]);
-  const end = () => offset(trailing[0]);
-
-  function jumpTo(left) {
-    track.scrollTo({left, behavior:'instant'});
-  }
-
-  // After a scroll into either copy, jump to the identical position in the main set.
-  function wrapPosition() {
-    const left = track.scrollLeft;
-    const cycleWidth = end() - start();
-    if (left < start() - 1) jumpTo(left + cycleWidth);
-    else if (left >= end() - 1) jumpTo(left - cycleWidth);
-  }
-
-  let scrollTimer;
-  if ('onscrollend' in track) {
-    track.addEventListener('scrollend', wrapPosition);
-  } else {
-    track.addEventListener('scroll', () => {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(wrapPosition, 150);
-    }, {passive:true});
-  }
-
-  let manuallyBrowsing = false;
-  track.addEventListener('pointerdown', () => { manuallyBrowsing = true; }, {passive:true});
-  function scrollServices(direction) {
-    const step = offset(track.children[1]);
-    const behavior = reduceMotion.matches ? 'instant' : 'smooth';
-    track.scrollBy({left:step * direction, behavior});
-  }
-
-  for (const button of controls.querySelectorAll('button')) button.addEventListener('click', () => {
-    manuallyBrowsing = true;
-    scrollServices(Number(button.dataset.slide));
-  });
-
-  controls.hidden = false;
-  jumpTo(start());
-  new ResizeObserver(() => jumpTo(start())).observe(track);
-  setInterval(() => {
-    if (manuallyBrowsing || reduceMotion.matches || document.hidden ||
-        servicesSection.matches(':hover, :focus-within')) return;
-    const bounds = track.getBoundingClientRect();
-    if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
-    scrollServices(1);
-  }, 4500);
+let manuallyBrowsing = false;
+track.addEventListener('pointerdown', () => { manuallyBrowsing = true; }, {passive:true});
+const controls = document.querySelector('.scroll-controls');
+const [previous, next] = controls.querySelectorAll('button');
+function updateScrollControls() {
+  const distance = track.scrollWidth - track.clientWidth;
+  controls.hidden = distance < 2;
+  previous.disabled = track.scrollLeft < 2;
+  next.disabled = track.scrollLeft >= distance - 1;
 }
+function scrollServices(direction) {
+  const firstCard = track.firstElementChild;
+  if (!firstCard) return;
+  const step = firstCard.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap);
+  const behavior = reduceMotion.matches ? 'instant' : 'smooth';
+  track.scrollBy({left:step * direction, behavior});
+}
+for (const button of [previous, next]) button.addEventListener('click', () => {
+  manuallyBrowsing = true;
+  scrollServices(Number(button.dataset.slide));
+});
+setInterval(() => {
+  if (manuallyBrowsing || reduceMotion.matches || document.hidden || controls.hidden ||
+      servicesSection.matches(':hover, :focus-within')) return;
+  const bounds = track.getBoundingClientRect();
+  if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
+  if (!next.disabled) scrollServices(1);
+}, 4500);
+track.addEventListener('scroll', updateScrollControls, {passive:true});
+new ResizeObserver(updateScrollControls).observe(track);
+updateScrollControls();
 </script>`);
 }
 function allServices() {
