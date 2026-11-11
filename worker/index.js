@@ -26,7 +26,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 .shop-menu a{display:block;padding:9px 12px;border-radius:4px}.shop-menu a:hover,.shop-menu a:focus-visible{background:#f0e7da}
 .shop-filters{border-bottom:1px solid var(--line);padding-bottom:20px;margin:22px 0 26px}.shop-filters a[aria-current]{background:var(--wine);color:white}.shop-order{margin-top:12px;display:inline-block}
 .shop-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}.visit,.gallery-grid{display:grid;gap:16px}
-.cards{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px) / 3);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
+.cards{display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
 
 .featured-section{padding-top:46px;padding-bottom:8px}.featured-head{margin-bottom:16px}.featured-head h2,.featured-head p:last-child{margin-bottom:0}
 .featured-window{overflow-x:auto;border-radius:8px}.featured-track,.featured-group{display:flex;width:max-content}.featured-group{gap:14px;padding-right:14px}
@@ -40,7 +40,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 @media(max-width:760px){.hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:45px}.hero-image{max-width:420px;border-radius:64px 64px 8px 8px}.cards{grid-auto-columns:min(88%,420px)}.section{padding-block:38px}}@media(max-width:540px){.two,.visit{grid-template-columns:1fr}.navlinks{gap:13px}}
 `;
 function page(title, content) {
-  return '<!doctype html><html lang="en-IN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Boutique tailoring, blouse stitching, saree finishing and alterations in Miyapur, Hyderabad."><title>' + escape(title) + ' | Nrusimha Designers</title><style>' + css + '</style><header><nav class="wrap" aria-label="Main"><a href="/" class="brand">Nrusimha Designers</a><div class="navlinks"><details class="shop-nav"><summary>Shop</summary><div class="shop-menu"><a href="/shop/occasion">Shop by Occasion</a><a href="/shop/person">Shop by Person</a></div></details><a href="/#services">Services</a><a href="/gallery">Gallery</a><a href="/appointment">Appointment</a><a href="' + whatsapp() + '">WhatsApp</a></div></nav></header><main>' + content + '</main><footer><div class="wrap">Nrusimha Designers · Miyapur, Hyderabad <span aria-hidden="true"> · </span><a href="' + maps + '">Google Maps</a></div></footer></html>';
+  return '<!doctype html><html lang="en-IN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Boutique tailoring, blouse stitching, saree finishing and alterations in Miyapur, Hyderabad."><title>' + escape(title) + ' | Nrusimha Designers</title><style>' + css + '</style><header><nav class="wrap" aria-label="Main"><a href="/" class="brand">Nrusimha Designers</a><div class="navlinks"><details class="shop-nav"><summary>Shop</summary><div class="shop-menu"><a href="/shop/occasion">Shop by Occasion</a><a href="/shop/person">Shop by Person</a></div></details><a href="/services">Services</a><a href="/gallery">Gallery</a><a href="/appointment">Appointment</a><a href="' + whatsapp() + '">WhatsApp</a></div></nav></header><main>' + content + '</main><footer><div class="wrap">Nrusimha Designers · Miyapur, Hyderabad <span aria-hidden="true"> · </span><a href="' + maps + '">Google Maps</a></div></footer></html>';
 }
 
 function serviceCard(service) {
@@ -60,10 +60,14 @@ function home() {
   return page('Boutique tailoring in Miyapur', `
 <section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/appointment">Request an Appointment</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div><img class="hero-image" src="/gallery/sample/tailoring-hero.webp" alt="Sewing machine poised over gold embroidery on plum silk" width="900" height="675" fetchpriority="high"></div></section>
 ${featuredGallery()}
-<section id="services" class="wrap section"><h2 id="services-heading">Services</h2><p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p><div class="cards" id="service-cards" role="region" aria-labelledby="services-heading" tabindex="0">${services.map(serviceCard).join('')}</div><div class="services-actions"><a class="button primary" href="/quote">Request a Quote</a><div class="scroll-controls" hidden><button type="button" data-slide="-1" aria-label="Scroll services left" aria-controls="service-cards">←</button><button type="button" data-slide="1" aria-label="Scroll services right" aria-controls="service-cards">→</button></div></div></section>
+<section id="services" class="wrap section"><h2 id="services-heading">Services</h2><p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p><div class="cards" id="service-cards" role="region" aria-labelledby="services-heading" tabindex="0">${services.map(serviceCard).join('')}</div><div class="services-actions"><div class="actions"><a class="button primary" href="/quote">Request a Quote</a><a class="button" href="/services">View All Services</a></div><div class="scroll-controls" hidden><button type="button" data-slide="-1" aria-label="Scroll services left" aria-controls="service-cards">←</button><button type="button" data-slide="1" aria-label="Scroll services right" aria-controls="service-cards">→</button></div></div></section>
 <section class="visit-bg"><div class="wrap section visit"><article class="panel"><p class="kicker">Customer reviews</p><h3>See what customers say</h3><p>Browse the latest customer reviews on Google Maps.</p><a class="button" href="${maps}">Read Google Reviews</a></article><article class="panel"><p class="kicker">Visit us</p><h3>Find us in Miyapur</h3><p>HMT Swarnapuri Colony, Ameenpur, Miyapur, Hyderabad, Telangana 502033</p><p>Monday–Saturday, 10 AM–8 PM. Sunday closed.</p><a class="button" href="${directions}">Get Directions</a></article></div></section>
 <script>
+const servicesSection = document.querySelector('#services');
 const track = document.querySelector('#service-cards');
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let manuallyBrowsing = false;
+track.addEventListener('pointerdown', () => { manuallyBrowsing = true; }, {passive:true});
 const controls = document.querySelector('.scroll-controls');
 const [previous, next] = controls.querySelectorAll('button');
 function updateScrollControls() {
@@ -72,17 +76,38 @@ function updateScrollControls() {
   previous.disabled = track.scrollLeft < 2;
   next.disabled = track.scrollLeft >= distance - 1;
 }
-for (const button of [previous, next]) button.addEventListener('click', () => {
+function scrollServices(direction) {
   const firstCard = track.firstElementChild;
   if (!firstCard) return;
   const step = firstCard.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap);
-  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
-  track.scrollBy({left:step * Number(button.dataset.slide), behavior});
+  const behavior = reduceMotion.matches ? 'instant' : 'smooth';
+  track.scrollBy({left:step * direction, behavior});
+}
+for (const button of [previous, next]) button.addEventListener('click', () => {
+  manuallyBrowsing = true;
+  scrollServices(Number(button.dataset.slide));
 });
+setInterval(() => {
+  if (manuallyBrowsing || reduceMotion.matches || document.hidden || controls.hidden ||
+      servicesSection.matches(':hover, :focus-within')) return;
+  const bounds = track.getBoundingClientRect();
+  if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
+  if (next.disabled) track.scrollTo({left:0, behavior:'smooth'});
+  else scrollServices(1);
+}, 4500);
 track.addEventListener('scroll', updateScrollControls, {passive:true});
 new ResizeObserver(updateScrollControls).observe(track);
 updateScrollControls();
 </script>`);
+}
+function allServices() {
+  return page('Services', `
+<section class="wrap section">
+  <h1>Tailoring Services</h1>
+  <p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p>
+  <div class="shop-results">${services.map(serviceCard).join('')}</div>
+  <div class="services-actions"><a class="button primary" href="/quote">Request a Quote</a></div>
+</section>`);
 }
 const shopPages = {
   occasion: {
@@ -147,7 +172,7 @@ function gallery(sort) {
     groups.get(group).push(photo);
   }
   const listing = [...groups].map(([design,items]) => `<section class="gallery-group">${design ? `<h2>${escape(design)}</h2>` : ''}<div class="gallery-grid">${items.map(photoCard).join('')}</div></section>`).join('');
-  return page('Gallery', `<section class="wrap section"><p class="kicker">Nrusimha Designers</p><h1>Design Gallery</h1><p class="muted">${galleryPhotos.length ? 'Browse designs and finished work from our boutique.' : 'These illustrative samples show the kinds of garment details you can browse here.'}</p><div class="actions gallery-sort" role="group" aria-label="Sort gallery"><a class="button" href="/gallery"${byName ? '' : ' aria-current="page"'}>By design</a><a class="button" href="/gallery?sort=name"${byName ? ' aria-current="page"' : ''}>By name A–Z</a></div>${listing || '<div class="panel"><h3>Photos coming soon</h3><p>Explore our tailoring services while we prepare the gallery.</p><a href="/#services">View Services</a></div>'}</section>`);
+  return page('Gallery', `<section class="wrap section"><p class="kicker">Nrusimha Designers</p><h1>Design Gallery</h1><p class="muted">${galleryPhotos.length ? 'Browse designs and finished work from our boutique.' : 'These illustrative samples show the kinds of garment details you can browse here.'}</p><div class="actions gallery-sort" role="group" aria-label="Sort gallery"><a class="button" href="/gallery"${byName ? '' : ' aria-current="page"'}>By design</a><a class="button" href="/gallery?sort=name"${byName ? ' aria-current="page"' : ''}>By name A–Z</a></div>${listing || '<div class="panel"><h3>Photos coming soon</h3><p>Explore our tailoring services while we prepare the gallery.</p><a href="/services">View Services</a></div>'}</section>`);
 }
 const reasons = ['Design consultation','Measurements','Fitting','Other'];
 const fileTypes = ['image/jpeg','image/png','image/webp'];
@@ -299,6 +324,7 @@ export default {
     if (request.method === 'POST' && (path === '/quote' || path === '/appointment')) return submit(request,env.BUCKET,path.slice(1));
     if (request.method !== 'GET') return new Response('Method not allowed',{status:405});
     if (path === '/') return html(home());
+    if (path === '/services') return html(allServices());
     if (path === '/shop/occasion' || path === '/shop/person') return html(shop(path.slice('/shop/'.length),url.searchParams));
     const sample = path.match(/^\/gallery\/sample\/([a-z-]+)\.webp$/);
     if (sample && Object.hasOwn(sampleGalleryImages,sample[1])) {
