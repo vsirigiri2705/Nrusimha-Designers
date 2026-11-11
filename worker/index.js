@@ -3,9 +3,9 @@ const phone = '917799862333';
 const maps = 'https://www.google.com/maps?cid=1832636968131500128';
 const directions = 'https://www.google.com/maps/dir/?api=1&destination=17.5168464%2C78.342662';
 const services = [
-  {name:'Blouse Stitching', mark:'01', occasions:'wedding festive everyday', people:'women', detail:'Bring your saree or blouse material. Tell us the neckline, sleeve style and fit you have in mind.'},
-  {name:'Saree Fall & Pico', mark:'02', occasions:'wedding festive everyday', people:'women', detail:'Get your saree ready to drape with fall stitching and a neat pico edge finish.'},
-  {name:'Alterations & Hemming', mark:'03', occasions:'wedding festive everyday', people:'women kids', detail:'Ask about shortening a hem, adjusting sleeves or refining the fit of a garment you already own.'}
+  {name:'Blouse Stitching', occasions:'wedding festive everyday', people:'women', detail:'Bring your saree or blouse material. Tell us the neckline, sleeve style and fit you have in mind.'},
+  {name:'Saree Fall & Pico', occasions:'wedding festive everyday', people:'women', detail:'Get your saree ready to drape with fall stitching and a neat pico edge finish.'},
+  {name:'Alterations & Hemming', occasions:'wedding festive everyday', people:'women kids', detail:'Ask about shortening a hem, adjusting sleeves or refining the fit of a garment you already own.'}
 ];
 // Add approved photos as { name, design, src, alt, featured }. Real photos replace the samples.
 const galleryPhotos = [];
@@ -26,7 +26,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 .shop-menu a{display:block;padding:9px 12px;border-radius:4px}.shop-menu a:hover,.shop-menu a:focus-visible{background:#f0e7da}
 .shop-filters{border-bottom:1px solid var(--line);padding-bottom:20px;margin:22px 0 26px}.shop-filters a[aria-current]{background:var(--wine);color:white}.shop-order{margin-top:12px;display:inline-block}
 .shop-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}.visit,.gallery-grid{display:grid;gap:16px}
-.cards{display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
+.cards{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:40%;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px;margin-inline:-4px}
 
 .featured-section{padding-top:46px;padding-bottom:8px}.featured-head{margin-bottom:16px}.featured-head h2,.featured-head p:last-child{margin-bottom:0}
 .featured-window{overflow-x:auto;border-radius:8px}.featured-track,.featured-group{display:flex;width:max-content}.featured-group{gap:14px;padding-right:14px}
@@ -36,7 +36,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 @media(prefers-reduced-motion:no-preference){.featured-window.is-playing{overflow:hidden}.is-playing .featured-repeat{display:flex}.is-playing .featured-track{animation:featured-scroll 38s linear infinite}.is-playing:hover .featured-track,.is-playing:focus-within .featured-track{animation-play-state:paused}}
 .cards .card{scroll-snap-align:start}.services-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:20px}
 .scroll-controls{display:flex;gap:8px}.scroll-controls button:disabled{opacity:.38;cursor:default}
-.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.gallery-photo{margin:0;max-width:360px;overflow:hidden;padding:0}.gallery-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#f0e7da}.gallery-photo figcaption{padding:14px 18px}.gallery-photo h3{margin-bottom:4px}.gallery-group{margin-top:30px}.gallery-sort{margin:20px 0}.gallery-sort a[aria-current]{background:var(--wine);color:white}.card,.panel{border:1px solid var(--line);background:#fffdf9;border-radius:8px;padding:24px}.card{display:flex;flex-direction:column}.number{font-family:Georgia,serif;color:var(--wine);border-bottom:1px solid var(--line);padding-bottom:9px}.muted{color:#63545a}.visit{grid-template-columns:1fr 1fr}.visit-bg{background:#f0e7da}footer{padding-block:24px;border-top:1px solid var(--line);font-size:.9rem}.form-shell{max-width:760px}form{display:grid;gap:17px}label{font-weight:650;display:grid;gap:5px}input,select,textarea{width:100%;font:inherit;color:inherit;background:white;border:1px solid #a99a9f;border-radius:4px;padding:10px}textarea{resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:.88rem;font-weight:normal;color:#63545a}.upload{border:1px dashed #b7a3a9;padding:12px;border-radius:5px}.error{color:#8c253c}.entry{margin-top:14px;overflow-wrap:anywhere}pre{white-space:pre-wrap;font:inherit}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27127;outline-offset:3px}
+.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}.gallery-photo{margin:0;max-width:360px;overflow:hidden;padding:0}.gallery-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#f0e7da}.gallery-photo figcaption{padding:14px 18px}.gallery-photo h3{margin-bottom:4px}.gallery-group{margin-top:30px}.gallery-sort{margin:20px 0}.gallery-sort a[aria-current]{background:var(--wine);color:white}.card,.panel{border:1px solid var(--line);background:#fffdf9;border-radius:8px;padding:24px}.card{display:flex;flex-direction:column}.muted{color:#63545a}.visit{grid-template-columns:1fr 1fr}.visit-bg{background:#f0e7da}footer{padding-block:24px;border-top:1px solid var(--line);font-size:.9rem}.form-shell{max-width:760px}form{display:grid;gap:17px}label{font-weight:650;display:grid;gap:5px}input,select,textarea{width:100%;font:inherit;color:inherit;background:white;border:1px solid #a99a9f;border-radius:4px;padding:10px}textarea{resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:.88rem;font-weight:normal;color:#63545a}.upload{border:1px dashed #b7a3a9;padding:12px;border-radius:5px}.error{color:#8c253c}.entry{margin-top:14px;overflow-wrap:anywhere}pre{white-space:pre-wrap;font:inherit}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27127;outline-offset:3px}
 @media(max-width:760px){.hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:45px}.hero-image{max-width:420px;border-radius:64px 64px 8px 8px}.cards{grid-auto-columns:min(88%,420px)}.section{padding-block:38px}}@media(max-width:540px){.two,.visit{grid-template-columns:1fr}.navlinks{gap:13px}}
 `;
 function page(title, content) {
@@ -44,7 +44,7 @@ function page(title, content) {
 }
 
 function serviceCard(service) {
-  return `<article class="card"><p class="number">${service.mark}</p><h3>${service.name}</h3><p>${service.detail}</p></article>`;
+  return `<article class="card"><h3>${service.name}</h3><p>${service.detail}</p></article>`;
 }
 function featuredGallery() {
   const selected = galleryPhotos.length ? galleryPhotos.filter(photo => photo.featured) : samplePhotos;
@@ -65,39 +65,72 @@ ${featuredGallery()}
 <script>
 const servicesSection = document.querySelector('#services');
 const track = document.querySelector('#service-cards');
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let manuallyBrowsing = false;
-track.addEventListener('pointerdown', () => { manuallyBrowsing = true; }, {passive:true});
 const controls = document.querySelector('.scroll-controls');
-const [previous, next] = controls.querySelectorAll('button');
-function updateScrollControls() {
-  const distance = track.scrollWidth - track.clientWidth;
-  controls.hidden = distance < 2;
-  previous.disabled = track.scrollLeft < 2;
-  next.disabled = track.scrollLeft >= distance - 1;
+const cards = [...track.children];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+if (cards.length > 1) {
+  function duplicate(card) {
+    const copy = card.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    return copy;
+  }
+
+  const leading = cards.map(duplicate);
+  const trailing = cards.map(duplicate);
+  track.prepend(...leading);
+  // Keep enough cards after the wrap point for a full viewport.
+  track.append(...trailing, duplicate(cards[0]));
+  const offset = card => card.offsetLeft - leading[0].offsetLeft;
+  const start = () => offset(cards[0]);
+  const end = () => offset(trailing[0]);
+
+  function jumpTo(left) {
+    track.scrollTo({left, behavior:'instant'});
+  }
+
+  // After a scroll into either copy, jump to the identical position in the main set.
+  function wrapPosition() {
+    const left = track.scrollLeft;
+    const cycleWidth = end() - start();
+    if (left < start() - 1) jumpTo(left + cycleWidth);
+    else if (left >= end() - 1) jumpTo(left - cycleWidth);
+  }
+
+  let scrollTimer;
+  if ('onscrollend' in track) {
+    track.addEventListener('scrollend', wrapPosition);
+  } else {
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(wrapPosition, 150);
+    }, {passive:true});
+  }
+
+  let manuallyBrowsing = false;
+  track.addEventListener('pointerdown', () => { manuallyBrowsing = true; }, {passive:true});
+  function scrollServices(direction) {
+    const step = offset(track.children[1]);
+    const behavior = reduceMotion.matches ? 'instant' : 'smooth';
+    track.scrollBy({left:step * direction, behavior});
+  }
+
+  for (const button of controls.querySelectorAll('button')) button.addEventListener('click', () => {
+    manuallyBrowsing = true;
+    scrollServices(Number(button.dataset.slide));
+  });
+
+  controls.hidden = false;
+  jumpTo(start());
+  new ResizeObserver(() => jumpTo(start())).observe(track);
+  setInterval(() => {
+    if (manuallyBrowsing || reduceMotion.matches || document.hidden ||
+        servicesSection.matches(':hover, :focus-within')) return;
+    const bounds = track.getBoundingClientRect();
+    if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
+    scrollServices(1);
+  }, 4500);
 }
-function scrollServices(direction) {
-  const firstCard = track.firstElementChild;
-  if (!firstCard) return;
-  const step = firstCard.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap);
-  const behavior = reduceMotion.matches ? 'instant' : 'smooth';
-  track.scrollBy({left:step * direction, behavior});
-}
-for (const button of [previous, next]) button.addEventListener('click', () => {
-  manuallyBrowsing = true;
-  scrollServices(Number(button.dataset.slide));
-});
-setInterval(() => {
-  if (manuallyBrowsing || reduceMotion.matches || document.hidden || controls.hidden ||
-      servicesSection.matches(':hover, :focus-within')) return;
-  const bounds = track.getBoundingClientRect();
-  if (bounds.bottom <= 0 || bounds.top >= innerHeight) return;
-  if (next.disabled) track.scrollTo({left:0, behavior:'smooth'});
-  else scrollServices(1);
-}, 4500);
-track.addEventListener('scroll', updateScrollControls, {passive:true});
-new ResizeObserver(updateScrollControls).observe(track);
-updateScrollControls();
 </script>`);
 }
 function allServices() {
