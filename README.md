@@ -1,6 +1,6 @@
 # Nrusimha Designers
 
-Mobile-friendly tailoring website for Nrusimha Designers in Miyapur, Hyderabad. The Worker serves the homepage, quote and appointment forms, and the owner inbox. Quote requests accept separate photos for material and reference work. Requests and attachments are stored in the R2 binding named `BUCKET`.
+Mobile-friendly tailoring website for Nrusimha Designers in Miyapur, Hyderabad. The Worker serves the homepage, quote form, and the owner inbox. Quote requests accept separate photos for material and reference work. Requests and attachments are stored in the R2 binding named `BUCKET`.
 
 ## Development
 

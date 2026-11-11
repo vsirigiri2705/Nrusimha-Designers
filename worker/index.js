@@ -40,7 +40,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 system-ui,s
 @media(max-width:760px){.hero .wrap{grid-template-columns:1fr;min-height:auto;padding-block:45px}.hero-image{max-width:420px;border-radius:64px 64px 8px 8px}.cards{grid-auto-columns:min(88%,420px)}.section{padding-block:38px}}@media(max-width:540px){.two,.visit{grid-template-columns:1fr}.navlinks{gap:13px}}
 `;
 function page(title, content) {
-  return '<!doctype html><html lang="en-IN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Boutique tailoring, blouse stitching, saree finishing and alterations in Miyapur, Hyderabad."><title>' + escape(title) + ' | Nrusimha Designers</title><style>' + css + '</style><header><nav class="wrap" aria-label="Main"><a href="/" class="brand">Nrusimha Designers</a><div class="navlinks"><details class="shop-nav"><summary>Shop</summary><div class="shop-menu"><a href="/shop/occasion">Shop by Occasion</a><a href="/shop/person">Shop by Person</a></div></details><a href="/services">Services</a><a href="/gallery">Gallery</a><a href="/appointment">Appointment</a><a href="' + whatsapp() + '">WhatsApp</a></div></nav></header><main>' + content + '</main><footer><div class="wrap">Nrusimha Designers · Miyapur, Hyderabad <span aria-hidden="true"> · </span><a href="' + maps + '">Google Maps</a></div></footer></html>';
+  return '<!doctype html><html lang="en-IN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Boutique tailoring, blouse stitching, saree finishing and alterations in Miyapur, Hyderabad."><title>' + escape(title) + ' | Nrusimha Designers</title><style>' + css + '</style><header><nav class="wrap" aria-label="Main"><a href="/" class="brand">Nrusimha Designers</a><div class="navlinks"><details class="shop-nav"><summary>Shop</summary><div class="shop-menu"><a href="/shop/occasion">Shop by Occasion</a><a href="/shop/person">Shop by Person</a></div></details><a href="/services">Services</a><a href="/gallery">Gallery</a><a href="' + whatsapp() + '">WhatsApp</a></div></nav></header><main>' + content + '</main><footer><div class="wrap">Nrusimha Designers · Miyapur, Hyderabad <span aria-hidden="true"> · </span><a href="' + maps + '">Google Maps</a></div></footer></html>';
 }
 
 function serviceCard(service) {
@@ -58,7 +58,7 @@ function featuredGallery() {
 }
 function home() {
   return page('Boutique tailoring in Miyapur', `
-<section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/appointment">Request an Appointment</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div><img class="hero-image" src="/gallery/sample/tailoring-hero.webp" alt="Sewing machine poised over gold embroidery on plum silk" width="900" height="675" fetchpriority="high"></div></section>
+<section class="hero"><div class="wrap"><div><p class="kicker">Boutique tailoring · Miyapur, Hyderabad</p><h1>Tailored for<br>your occasion.</h1><p>From a new saree blouse to a better-fitting favourite, tell us what you have in mind.</p><div class="actions"><a class="button primary" href="/quote">Request a Quote</a><a class="button" href="${whatsapp()}">Chat on WhatsApp</a></div></div><img class="hero-image" src="/gallery/sample/tailoring-hero.webp" alt="Sewing machine poised over gold embroidery on plum silk" width="900" height="675" fetchpriority="high"></div></section>
 ${featuredGallery()}
 <section id="services" class="wrap section"><h2 id="services-heading">Services</h2><p class="muted">Tell us what you need and we’ll reply with an estimate on WhatsApp.</p><div class="cards" id="service-cards" role="region" aria-labelledby="services-heading" tabindex="0">${services.map(serviceCard).join('')}</div><div class="services-actions"><div class="actions"><a class="button primary" href="/quote">Request a Quote</a><a class="button" href="/services">View All Services</a></div><div class="scroll-controls" hidden><button type="button" data-slide="-1" aria-label="Scroll services left" aria-controls="service-cards">←</button><button type="button" data-slide="1" aria-label="Scroll services right" aria-controls="service-cards">→</button></div></div></section>
 <section class="visit-bg"><div class="wrap section visit"><article class="panel"><p class="kicker">Customer reviews</p><h3>See what customers say</h3><p>Browse the latest customer reviews on Google Maps.</p><a class="button" href="${maps}">Read Google Reviews</a></article><article class="panel"><p class="kicker">Visit us</p><h3>Find us in Miyapur</h3><p>HMT Swarnapuri Colony, Ameenpur, Miyapur, Hyderabad, Telangana 502033</p><p>Monday–Saturday, 10 AM–8 PM. Sunday closed.</p><a class="button" href="${directions}">Get Directions</a></article></div></section>
@@ -173,20 +173,17 @@ function gallery(sort) {
   const listing = [...groups].map(([design,items]) => `<section class="gallery-group">${design ? `<h2>${escape(design)}</h2>` : ''}<div class="gallery-grid">${items.map(photoCard).join('')}</div></section>`).join('');
   return page('Gallery', `<section class="wrap section"><p class="kicker">Nrusimha Designers</p><h1>Design Gallery</h1><p class="muted">${galleryPhotos.length ? 'Browse designs and finished work from our boutique.' : 'These illustrative samples show the kinds of garment details you can browse here.'}</p><div class="actions gallery-sort" role="group" aria-label="Sort gallery"><a class="button" href="/gallery"${byName ? '' : ' aria-current="page"'}>By design</a><a class="button" href="/gallery?sort=name"${byName ? ' aria-current="page"' : ''}>By name A–Z</a></div>${listing || '<div class="panel"><h3>Photos coming soon</h3><p>Explore our tailoring services while we prepare the gallery.</p><a href="/services">View Services</a></div>'}</section>`);
 }
-const reasons = ['Design consultation','Measurements','Fitting','Other'];
 const fileTypes = ['image/jpeg','image/png','image/webp'];
 const maxFile = 4 * 1024 * 1024;
 const uploadFields = { material:'Your material or saree', reference:'Reference for the work' };
-function form(kind, selected) {
-  const quote = kind === 'quote';
-  const title = quote ? 'Request a Quote' : 'Request an Appointment';
-  const options = quote ? services.map(service => service.name) : reasons;
-  return page(title, `<section class="wrap section form-shell"><p class="kicker">Nrusimha Designers</p><h1 style="font-size:clamp(2.7rem,7vw,4.6rem)">${title}</h1><p>${quote ? 'Share what you’d like stitched or altered. We’ll follow up on WhatsApp.' : 'Suggest a time for your shop visit. We’ll confirm availability on WhatsApp.'}</p><div class="panel"><form method="post" enctype="multipart/form-data" action="/${kind}"><div class="two"><label>Name<input name="name" required maxlength="80" autocomplete="name"></label><label>WhatsApp number<input name="phone" type="tel" required maxlength="22" autocomplete="tel" placeholder="+91"></label></div>
-<label>${quote ? 'Service' : 'Reason for visit'}<select name="service" required><option value="">Choose one</option>${options.map(item => `<option${item === selected ? ' selected' : ''}>${item}</option>`).join('')}</select></label>
-<label>${quote ? 'What would you like done?' : 'Anything we should know? (optional)'}<textarea name="notes" rows="4" maxlength="1500" ${quote ? 'required' : ''}></textarea></label>
-<div class="two"><label>${quote ? 'Required-by date (optional)' : 'Preferred date'}<input type="date" name="date" ${quote ? '' : 'required'}></label>${quote ? '' : '<label>Preferred time (India time)<input type="time" name="time" min="10:00" max="19:30" required></label>'}</div>
-${quote ? `<div class="two">${Object.entries(uploadFields).map(([key,label]) => `<label class="upload">${label}<span class="hint">Optional · JPG, PNG or WebP · up to 4 MB</span><input type="file" name="${key}" accept="${fileTypes.join(',')}"></label>`).join('')}</div>` : '<p class="hint">Appointments are available by request Monday through Saturday. Bring your garment or material if you have it.</p>'}
-<p class="hint">We use your contact details and any uploaded photos to respond to this request. Your uploads are private.</p><p class="error" role="alert" hidden></p><button class="primary" type="submit">Send ${quote ? 'Quote' : 'Appointment'} Request</button></form></div></section>
+function quoteForm(selected) {
+  const options = services.map(service => service.name);
+  return page('Request a Quote', `<section class="wrap section form-shell"><p class="kicker">Nrusimha Designers</p><h1 style="font-size:clamp(2.7rem,7vw,4.6rem)">Request a Quote</h1><p>Share what you’d like stitched or altered. We’ll follow up on WhatsApp.</p><div class="panel"><form method="post" enctype="multipart/form-data" action="/quote"><div class="two"><label>Name<input name="name" required maxlength="80" autocomplete="name"></label><label>WhatsApp number<input name="phone" type="tel" required maxlength="22" autocomplete="tel" placeholder="+91"></label></div>
+<label>Service<select name="service" required><option value="">Choose one</option>${options.map(item => `<option${item === selected ? ' selected' : ''}>${item}</option>`).join('')}</select></label>
+<label>What would you like done?<textarea name="notes" rows="4" maxlength="1500" required></textarea></label>
+<label>Required-by date (optional)<input type="date" name="date"></label>
+<div class="two">${Object.entries(uploadFields).map(([key,label]) => `<label class="upload">${label}<span class="hint">Optional · JPG, PNG or WebP · up to 4 MB</span><input type="file" name="${key}" accept="${fileTypes.join(',')}"></label>`).join('')}</div>
+<p class="hint">We use your contact details and any uploaded photos to respond to this request. Your uploads are private.</p><p class="error" role="alert" hidden></p><button class="primary" type="submit">Send Quote Request</button></form></div></section>
 <script>
 const form = document.querySelector('form');
 form.addEventListener('submit', async event => {
@@ -199,7 +196,7 @@ form.addEventListener('submit', async event => {
     const response = await fetch(form.action, {method:'POST', body:new FormData(form)});
     const result = await response.json();
     if (!response.ok) throw new Error(result.error || 'Could not send your request.');
-    location.assign('/received?kind=${kind}&id=' + encodeURIComponent(result.id));
+    location.assign('/received?id=' + encodeURIComponent(result.id));
   } catch (problem) {
     error.textContent = problem instanceof TypeError ? 'Could not connect. Please try again or chat on WhatsApp.' : problem.message;
     error.hidden = false;
@@ -248,36 +245,33 @@ async function isImage(file) {
   if (file.type === 'image/png') return [137,80,78,71,13,10,26,10].every((value,i) => value === b[i]);
   return String.fromCharCode(...b.slice(0,4)) === 'RIFF' && String.fromCharCode(...b.slice(8)) === 'WEBP';
 }
-async function submit(request, bucket, kind) {
+async function submitQuote(request, bucket) {
   if (request.headers.get('Origin') !== new URL(request.url).origin) return failure('Open this form on the boutique website.',403);
   if (!bucket) return failure('Online requests are temporarily unavailable. Please chat on WhatsApp.',503);
   let form;
   try { form = await readForm(request); } catch { return failure('Please check your form and try again.'); }
   if (!form) return failure('Please check the file sizes and try again.');
   const {data,payload,contentType} = form;
-  const quote = kind === 'quote';
   const name = val(data,'name');
   const rawPhone = val(data,'phone');
   const number = rawPhone.replace(/[\s()-]/g,'');
   const service = val(data,'service');
   const notes = val(data,'notes');
   const date = val(data,'date');
-  const time = val(data,'time');
   if (!name || name.length > 80 || !/^\+?\d{10,15}$/.test(number)) return failure('Enter your name and a valid WhatsApp number.');
-  if (!(quote ? services.some(item => item.name === service) : reasons.includes(service))) return failure('Choose a service or reason for visiting.');
-  if (notes.length > 1500 || (quote && !notes)) return failure('Enter a short description of the work.');
+  if (!services.some(item => item.name === service)) return failure('Choose a service.');
+  if (!notes || notes.length > 1500) return failure('Enter a short description of the work.');
   if (date) {
     const parsed = new Date(date + 'T00:00:00Z');
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || isNaN(parsed) || parsed.toISOString().slice(0,10) !== date || date < dateInIndia()) return failure('Choose today or a future date.');
   }
-  if (!quote && (!date || new Date(date + 'T00:00:00Z').getUTCDay() === 0 || !/^\d{2}:[0-5]\d$/.test(time) || time < '10:00' || time > '19:30')) return failure('Choose a time between 10 AM and 7:30 PM, Monday through Saturday.');
   for (const key of Object.keys(uploadFields)) {
     const file = data.get(key);
-    if (file instanceof File && file.size && (!quote || !await isImage(file))) return failure('Use JPG, PNG or WebP photos up to 4 MB each.');
+    if (file instanceof File && file.size && !await isImage(file)) return failure('Use JPG, PNG or WebP photos up to 4 MB each.');
   }
   const id = Date.now() + '-' + crypto.randomUUID();
   try {
-    await bucket.put('requests/' + id,payload,{httpMetadata:{contentType},customMetadata:{kind}});
+    await bucket.put('requests/' + id,payload,{httpMetadata:{contentType},customMetadata:{kind:'quote'}});
   } catch {
     return failure('We couldn’t save your request. Please try again or chat on WhatsApp.',503);
   }
@@ -304,7 +298,7 @@ async function inbox(url, bucket) {
     const quote = summary.customMetadata?.kind === 'quote';
     rows.push('<article class="panel entry"><p class="kicker">' + (quote ? 'Quote' : 'Appointment') + ' · ' + new Date(Number(id.slice(0,13))).toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'}) + '</p><h3>' + escape(val(data,'service')) + '</h3><p>' + escape(val(data,'name')) + ' · ' + escape(val(data,'phone')) + '</p><p>' + escape([val(data,'date'),val(data,'time')].filter(Boolean).join(' · ')) + '</p><pre>' + escape(val(data,'notes')) + '</pre><div class="actions"><a class="button primary" href="https://wa.me/' + contact + '">Reply on WhatsApp</a>' + Object.entries(uploadFields).map(([key,label]) => fileLink(data,id,key,label)).join('') + '</div></article>');
   }
-  return html(page('Private inbox','<section class="wrap section form-shell"><h2>Request inbox</h2>' + (rows.length ? rows.join('') : '<p>New quote and appointment requests will appear here.</p>') + (listing.truncated ? '<p class="entry"><a class="button" href="/inbox?cursor=' + encodeURIComponent(listing.cursor) + '">More requests</a></p>' : '') + '</section>'));
+  return html(page('Private inbox','<section class="wrap section form-shell"><h2>Request inbox</h2>' + (rows.length ? rows.join('') : '<p>New quote requests will appear here.</p>') + (listing.truncated ? '<p class="entry"><a class="button" href="/inbox?cursor=' + encodeURIComponent(listing.cursor) + '">More requests</a></p>' : '') + '</section>'));
 }
 async function photo(url,bucket) {
   const id = url.searchParams.get('id') || '';
@@ -320,7 +314,7 @@ export default {
   async fetch(request,env) {
     const url = new URL(request.url);
     const path = url.pathname;
-    if (request.method === 'POST' && (path === '/quote' || path === '/appointment')) return submit(request,env.BUCKET,path.slice(1));
+    if (request.method === 'POST' && path === '/quote') return submitQuote(request,env.BUCKET);
     if (request.method !== 'GET') return new Response('Method not allowed',{status:405});
     if (path === '/') return html(home());
     if (path === '/services') return html(allServices());
@@ -331,10 +325,9 @@ export default {
       return new Response(bytes,{headers:{'Content-Type':'image/webp','Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff'}});
     }
     if (path === '/gallery') return html(gallery(url.searchParams.get('sort')));
-    if (path === '/quote' || path === '/appointment') return html(form(path.slice(1),url.searchParams.get('service')));
-    if (path === '/received') {
-      const quote = url.searchParams.get('kind') === 'quote';
-      return html(page('Request received','<section class="wrap section form-shell"><h2>' + (quote ? 'Quote request received' : 'Appointment requested') + '</h2><p>' + (quote ? 'We’ll review your details and follow up on WhatsApp.' : 'We’ll message you on WhatsApp to confirm a time.') + '</p><a class="button" href="/">Back to home</a></section>'));
+    if (path === '/quote') return html(quoteForm(url.searchParams.get('service')));
+    if (path === '/received' && url.searchParams.get('kind') !== 'appointment') {
+      return html(page('Request received','<section class="wrap section form-shell"><h2>Quote request received</h2><p>We’ll review your details and follow up on WhatsApp.</p><a class="button" href="/">Back to home</a></section>'));
     }
     if (path === '/inbox' || path === '/inbox/photo') {
       // The deployment gateway must inject verified identity and strip client-supplied identity headers.
